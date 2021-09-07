@@ -38,9 +38,6 @@ public class PlayGroundRestDsl extends RouteBuilder {
         onException(Exception.class).to("bean:exceptionHandler?method=handleCustomException"); // Must be above all from() can be after rest()
 
         // Rest Clauses
-        from("rest:get:helloworld?produces=application/json")
-                .to("direct:helloworld");
-
 
         rest().get("/hello")
                 .to("direct:hello");
@@ -63,7 +60,7 @@ public class PlayGroundRestDsl extends RouteBuilder {
         // Routes
         from("direct:helloworld")
                 .log(LoggingLevel.INFO, "Hello World")
-                .transform().simple("Hello World");
+                .transform().simple("Hello World!");
 
         from("direct:hello")
                 .process(helloProcessor)
