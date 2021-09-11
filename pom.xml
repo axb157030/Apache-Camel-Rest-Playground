@@ -36,7 +36,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-test</artifactId>
 			<scope>test</scope>
@@ -56,17 +56,19 @@
 			<version>${camel.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-			<version>1.18.12</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-servlet</artifactId>
 			<version>${camel.version}</version>
+		</dependency> -->
+
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+			<version>1.18.12</version>
 		</dependency>
 
 		<dependency>
@@ -95,12 +97,12 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-test-junit5</artifactId>
 			<version>${camel.version}</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.apache.camel</groupId>

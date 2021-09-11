@@ -39,8 +39,8 @@ public class PlayGroundRestDsl extends RouteBuilder {
 
         // Rest Clauses
 
-        rest().get("/hello")
-                .to("direct:hello");
+        rest().get("/hello") // Define url path
+                .to("direct:hello"); // Route to go to
 
 
         rest().get("/hello2ToTest") // if rest() calls several to routes after another result will be exchange body from last to route
@@ -48,7 +48,7 @@ public class PlayGroundRestDsl extends RouteBuilder {
                 .to("direct:ping");
 
 
-       rest().get("fileTest").to("direct:fileStart"); // Rest has a route that has several to routes. The exchanges carry on between the to routes with the result being rhe message from the last to route. When referring to to route, I mean to("direct:<routeName>"). Seems to make sense with having 1 from containing path and up to several to() containing that path
+       rest().get("fileTest").to("direct:fileStart"); // Rest has a route that has several to() routes. The exchanges carry on between the to() routes with the result being rhe message from the last to route. When referring to to() route, I mean to("direct:<routeName>"). Seems to make sense with having 1 from containing path and up to several to() containing that path
 
         rest().get("/helloCondition")
                 .to("direct:seRandNum");
@@ -58,7 +58,7 @@ public class PlayGroundRestDsl extends RouteBuilder {
 
 
         // Routes
-        from("direct:helloworld")
+        from("direct:helloworld") // Where route starts
                 .log(LoggingLevel.INFO, "Hello World")
                 .transform().simple("Hello World!");
 
@@ -74,7 +74,7 @@ public class PlayGroundRestDsl extends RouteBuilder {
                 .to("direct:ping")
                 .to("file:output?fileName=apacheCamelSample")
                         .process(pingProcessor)//.process(exceptionProcessor); //// Processor modify message body to display to user
-        .to("bean:player?method=play")
+        .to("bean:player?method=play") // Calling service, which modify message. Calling method play in player class
         .to("bean:player?method=play");
                 //.to("bean:exceptionHandler?method=handleCustomException");
                 // process and on exception.
@@ -88,12 +88,27 @@ public class PlayGroundRestDsl extends RouteBuilder {
                 .to("bean:player?method=ret")
                 .to("bean:player?method=ret2"); // String returned by last method of route is returned
 
-        from("direct:seRandNum")
+        from("direct:seRandNum") // This route sets random number depending on condition in when() clauses
                 .process(randomNumProcessor)
-                        .choice().when(exchange -> {return exchange.getProperty("randNum").toString().length() > 1;})
+                        .choice().when(exchange -> {return  exchange.getProperty("randNum").toString().length() > 1;})
                         .to("direct:addRandNum").otherwise().to("direct:subtractRandNum");
         from("direct:addRandNum").process(this::addRandNum);
         from("direct:subtractRandNum").process(this::subtractRandNum);
+
+        from("direct:nestCondition") // This route sets random number depending on condition in when() clauses
+                .process(exchange -> {
+                    exchange.setProperty("condition1", true);
+                    exchange.setProperty("condition2", false);
+                    exchange.getIn().setBody("nest condition");
+
+                }).choice()
+                .when(simple("${exchangeProperty.condition1} == true"))
+                    .when(simple("${exchangeProperty.condition2} == true"))
+                    .process(exchange -> {exchange.getIn().setBody("Both conditions are true");} )
+                    .otherwise().process(exchange -> {exchange.getIn().setBody("condition2 is not true");})
+                .otherwise().process(exchange -> {exchange.getIn().setBody("condition1 is not true");});
+
+
 
 
         // .responseMessage().code(200).message("Ping").endResponseMessage();
