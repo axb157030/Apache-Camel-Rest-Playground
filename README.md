@@ -14,4 +14,4 @@ The REST requests are all prefixed with "services" thank to `camel.servlet.mappi
   - This example is in this application. If users make a GET request with `http://localhost:8080/services/hello` they will get a response of "Hello". The `to("direct:hello")` method maps the request to a route named "hello". This route returns a message of hello. 
 
 ## Routes
-  
+  - Routes are defined by the <a href= "https://camel.apache.org/manual/latest/routes.html">from</a> and to method. We are specifcally talking about routing web services. They modify the message using processor methods. The message body or what the last service in route returns is what is returned from the route. The from() methods route to other routes with the to() methods. When routing web service, the from() method contains name of route it defines and the to() method contains name of route to go to. The message in the route is held by `Exchange` objects.
