@@ -10,8 +10,12 @@ public class OtherPlayGroundRestDsl extends RouteBuilder {
         // Rest Clauses
         from("rest:get:helloworld?produces=application/json")
                 .to("direct:helloworld");
+        from("rest:get:helloEx?produces=application/json")
+                .to("direct:helloExample");
 
         from("rest:get:nestCondition?produces=application/json")
                 .to("direct:nestCondition");
+
+
     }
 }

@@ -66,6 +66,11 @@ public class PlayGroundRestDsl extends RouteBuilder {
                 .process(helloProcessor)
                 .log(LoggingLevel.INFO, "Hello");
 
+        from("direct:helloExample")
+                .process(helloProcessor)
+                .process(pingProcessor)
+                .log(LoggingLevel.INFO, "Hello");
+
         from("direct:ping").process(pingProcessor);
 
 

@@ -12,7 +12,7 @@ public class HelloProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Message message = new DefaultMessage(exchange.getContext());
         message.setBody("Hello");
-        exchange.setProperty("k1", "Key");
+        exchange.setProperty("k1", "keyValue");
         exchange.setMessage(message);
     }
 }
