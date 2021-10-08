@@ -11,7 +11,7 @@ public class PingProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         Message message = exchange.getMessage();
-        message.setBody(exchange.getMessage().getBody() + " " + exchange.getProperty("k1") +  " Ping");
+        message.setBody(exchange.getMessage().getBody().toString() + " " + exchange.getProperty("k1") +  " Ping");
         exchange.setMessage(message);
     }
 }
